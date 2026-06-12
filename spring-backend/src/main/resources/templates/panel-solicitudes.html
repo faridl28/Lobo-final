@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Solicitudes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; }
+        h1 { color: #333; }
+        .indicadores { display: flex; gap: 16px; margin-bottom: 24px; }
+        .card { padding: 16px 24px; border-radius: 8px; color: white; min-width: 120px; text-align: center; }
+        .card h2 { margin: 0; font-size: 2rem; }
+        .card p { margin: 4px 0 0; }
+        .total { background: #555; }
+        .pendiente { background: #e6a817; }
+        .aprobada { background: #28a745; }
+        .rechazada { background: #dc3545; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; }
+        .badge { padding: 4px 10px; border-radius: 12px; color: white; font-size: 0.85rem; }
+        .PENDIENTE { background: #e6a817; }
+        .APROBADA { background: #28a745; }
+        .RECHAZADA { background: #dc3545; }
+    </style>
+</head>
+<body>
+<h1>Panel de Solicitudes</h1>
+
+<div class="indicadores">
+    <div class="card total">
+        <h2 th:text="${total}">0</h2>
+        <p>Total</p>
+    </div>
+    <div class="card pendiente">
+        <h2 th:text="${pendientes}">0</h2>
+        <p>Pendientes</p>
+    </div>
+    <div class="card aprobada">
+        <h2 th:text="${aprobadas}">0</h2>
+        <p>Aprobadas</p>
+    </div>
+    <div class="card rechazada">
+        <h2 th:text="${rechazadas}">0</h2>
+        <p>Rechazadas</p>
+    </div>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Usuario</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Fecha creación</th>
+        <th>Observación</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="s : ${solicitudes}">
+        <td th:text="${s.solicitante.username}">-</td>
+        <td th:text="${s.tipo}">-</td>
+        <td>
+            <span class="badge" th:classappend="${s.estado}" th:text="${s.estado}">-</span>
+        </td>
+        <td th:text="${s.creadoEn}">-</td>
+        <td th:text="${s.observacion != null ? s.observacion : '-'}">-</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
